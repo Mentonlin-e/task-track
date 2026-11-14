@@ -2,8 +2,6 @@
   font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   color: #20231f;
   background: #f5f6f2;
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
   --green: #4f805f;
   --green-dark: #3c674b;
   --muted: #82877f;
@@ -25,11 +23,15 @@ body {
   margin: 0 auto;
 }
 
-.header {
+.header,
+.list-heading {
   display: flex;
   align-items: flex-end;
   justify-content: space-between;
-  gap: 20px;
+  gap: 16px;
+}
+
+.header {
   margin-bottom: 28px;
 }
 
@@ -42,19 +44,16 @@ body {
 }
 
 h1,
-h2,
-p {
-  margin-top: 0;
+h2 {
+  margin: 0;
 }
 
 h1 {
-  margin-bottom: 0;
   font-size: clamp(30px, 6vw, 42px);
   letter-spacing: -1.5px;
 }
 
 h2 {
-  margin-bottom: 0;
   font-size: 18px;
   letter-spacing: -0.3px;
 }
@@ -75,16 +74,15 @@ h2 {
 }
 
 .task-form {
-  display: flex;
-  gap: 10px;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 12px 10px;
   margin-bottom: 26px;
 }
 
-.task-form input {
+.task-form > input[type="text"] {
   min-width: 0;
-  flex: 1;
   padding: 13px 15px;
-  color: inherit;
   background: #fafbf9;
   border: 1px solid var(--border);
   border-radius: 10px;
@@ -92,12 +90,12 @@ h2 {
   outline: none;
 }
 
-.task-form input:focus {
+.task-form > input[type="text"]:focus {
   border-color: var(--green);
   box-shadow: 0 0 0 3px rgb(79 128 95 / 12%);
 }
 
-.task-form button {
+.task-form > button {
   padding: 0 17px;
   color: #fff;
   background: var(--green);
@@ -107,18 +105,87 @@ h2 {
   font-size: 14px;
   font-weight: 650;
   cursor: pointer;
-  transition: background 150ms ease;
 }
 
-.task-form button:hover {
+.task-form > button:hover {
   background: var(--green-dark);
 }
 
-.list-heading {
+.theme-picker {
   display: flex;
+  grid-column: 1 / -1;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.theme-picker legend {
+  margin-bottom: 8px;
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.theme-option {
+  cursor: pointer;
+}
+
+.theme-option input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.theme-option span {
+  display: inline-flex;
   align-items: center;
-  justify-content: space-between;
-  gap: 16px;
+  gap: 7px;
+  padding: 7px 11px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  font-size: 13px;
+  transition: 150ms ease;
+}
+
+.theme-option span::before,
+.task-theme::before {
+  width: 9px;
+  height: 9px;
+  flex: 0 0 auto;
+  border-radius: 50%;
+  content: "";
+}
+
+.theme-option.home span::before,
+.task-theme.home::before {
+  background: #8957c8;
+}
+
+.theme-option.work span::before,
+.task-theme.work::before {
+  background: #397bd1;
+}
+
+.theme-option.health span::before,
+.task-theme.health::before {
+  background: #df5960;
+}
+
+.theme-option input:checked + span {
+  border-color: currentColor;
+  box-shadow: 0 0 0 2px rgb(0 0 0 / 5%);
+}
+
+.theme-option.home input:checked + span { color: #7540b3; }
+.theme-option.work input:checked + span { color: #2769bd; }
+.theme-option.health input:checked + span { color: #c8424a; }
+
+.theme-option input:focus-visible + span {
+  outline: 3px solid #a7c9ad;
+  outline-offset: 2px;
+}
+
+.list-heading {
   margin-bottom: 15px;
 }
 
@@ -145,7 +212,7 @@ h2 {
   border-radius: 10px;
 }
 
-.task-item input {
+.task-item input[type="checkbox"] {
   width: 18px;
   height: 18px;
   accent-color: var(--green);
@@ -163,6 +230,15 @@ h2 {
   text-decoration: line-through;
 }
 
+.task-theme {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--muted);
+  font-size: 12px;
+  white-space: nowrap;
+}
+
 .delete-button {
   padding: 6px 8px;
   color: #9a6b68;
@@ -175,8 +251,8 @@ h2 {
 }
 
 .delete-button:hover {
-  background: #fbf1ef;
   color: #a4473e;
+  background: #fbf1ef;
 }
 
 .empty-state {
@@ -184,10 +260,6 @@ h2 {
   color: var(--muted);
   font-size: 14px;
   text-align: center;
-}
-
-.chart-panel {
-  padding-bottom: 20px;
 }
 
 .chart-total {
@@ -277,11 +349,15 @@ footer {
   }
 
   .task-form {
-    flex-direction: column;
+    grid-template-columns: 1fr;
   }
 
-  .task-form button {
+  .task-form > button {
     min-height: 45px;
+  }
+
+  .theme-picker {
+    flex-wrap: wrap;
   }
 
   .chart {
@@ -291,5 +367,14 @@ footer {
   .bar-value,
   .day-label {
     font-size: 10px;
+  }
+
+  .task-theme {
+    font-size: 0;
+  }
+
+  .task-theme::before {
+    width: 11px;
+    height: 11px;
   }
 }

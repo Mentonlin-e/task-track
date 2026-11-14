@@ -1,4 +1,9 @@
 const STORAGE_KEY = "task-tracker-tasks";
+const THEMES = {
+  home: "Дом",
+  work: "Работа",
+  health: "Здоровье"
+};
 
 const form = document.querySelector("#task-form");
 const input = document.querySelector("#task-input");
@@ -14,7 +19,13 @@ let tasks = loadTasks();
 function loadTasks() {
   try {
     const saved = JSON.parse(localStorage.getItem(STORAGE_KEY));
-    return Array.isArray(saved) ? saved : [];
+    if (!Array.isArray(saved)) return [];
+
+    // Добавляет тему по умолчанию старым задачам, сохранённым до обновления.
+    return saved.map((task) => ({
+      ...task,
+      theme: THEMES[task.theme] ? task.theme : "home"
+    }));
   } catch {
     return [];
   }
@@ -29,6 +40,16 @@ function dateKey(date) {
   const month = String(date.getMonth() + 1).padStart(2, "0");
   const day = String(date.getDate()).padStart(2, "0");
   return `${year}-${month}-${day}`;
+}
+
+function pluralize(number, one, few, many) {
+  const lastTwo = number % 100;
+  const last = number % 10;
+
+  if (lastTwo >= 11 && lastTwo <= 14) return many;
+  if (last === 1) return one;
+  if (last >= 2 && last <= 4) return few;
+  return many;
 }
 
 function renderTasks() {
@@ -48,6 +69,10 @@ function renderTasks() {
     text.className = "task-text";
     text.textContent = task.text;
 
+    const theme = document.createElement("span");
+    theme.className = `task-theme ${task.theme}`;
+    theme.textContent = THEMES[task.theme];
+
     const deleteButton = document.createElement("button");
     deleteButton.className = "delete-button";
     deleteButton.type = "button";
@@ -55,31 +80,23 @@ function renderTasks() {
     deleteButton.setAttribute("aria-label", `Удалить задачу «${task.text}»`);
     deleteButton.addEventListener("click", () => deleteTask(task.id));
 
-    item.append(checkbox, text, deleteButton);
+    item.append(checkbox, text, theme, deleteButton);
     taskList.append(item);
   }
 
   const activeTasks = tasks.filter((task) => !task.completed).length;
-  taskCount.textContent = `${activeTasks} ${pluralize(activeTasks, "задача", "задачи", "задач")}`;
+  taskCount.textContent =
+    `${activeTasks} ${pluralize(activeTasks, "задача", "задачи", "задач")}`;
   emptyState.hidden = tasks.length !== 0;
 
   renderChart();
 }
 
-function pluralize(number, one, few, many) {
-  const lastTwo = number % 100;
-  const last = number % 10;
-
-  if (lastTwo >= 11 && lastTwo <= 14) return many;
-  if (last === 1) return one;
-  if (last >= 2 && last <= 4) return few;
-  return many;
-}
-
-function addTask(text) {
+function addTask(text, theme) {
   tasks.unshift({
     id: crypto.randomUUID?.() ?? `${Date.now()}-${Math.random()}`,
     text,
+    theme,
     completed: false,
     completedAt: null
   });
@@ -122,9 +139,7 @@ function renderChart() {
   }
 
   const maxCount = Math.max(...days.map((day) => day.count), 1);
-  const total = days.reduce((sum, day) => sum + day.count, 0);
-
-  chartTotal.textContent = total;
+  chartTotal.textContent = days.reduce((sum, day) => sum + day.count, 0);
   chart.replaceChildren();
 
   for (const day of days) {
@@ -162,7 +177,8 @@ form.addEventListener("submit", (event) => {
   const text = input.value.trim();
   if (!text) return;
 
-  addTask(text);
+  const theme = new FormData(form).get("theme") || "home";
+  addTask(text, theme);
   form.reset();
   input.focus();
 });

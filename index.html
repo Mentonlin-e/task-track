@@ -28,6 +28,22 @@
           required
         >
         <button type="submit">Добавить задачу</button>
+
+        <fieldset class="theme-picker">
+          <legend>Тема задачи</legend>
+          <label class="theme-option home">
+            <input type="radio" name="theme" value="home" checked>
+            <span>Дом</span>
+          </label>
+          <label class="theme-option work">
+            <input type="radio" name="theme" value="work">
+            <span>Работа</span>
+          </label>
+          <label class="theme-option health">
+            <input type="radio" name="theme" value="health">
+            <span>Здоровье</span>
+          </label>
+        </fieldset>
       </form>
 
       <div class="list-heading">
@@ -47,13 +63,8 @@
         </div>
         <span class="chart-total" id="chart-total">0</span>
       </div>
-
-      <div
-        class="chart"
-        id="chart"
-        role="img"
-        aria-label="Количество выполненных задач за последние 7 дней"
-      ></div>
+      <div class="chart" id="chart" role="img"
+           aria-label="Количество выполненных задач за последние 7 дней"></div>
     </section>
 
     <footer>Данные сохраняются в этом браузере</footer>
