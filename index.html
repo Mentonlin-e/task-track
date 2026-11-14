@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Трекер задач</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main class="app">
+    <header class="header">
+      <div>
+        <p class="eyebrow">ПЛАНИРУЙТЕ СВОЙ ДЕНЬ</p>
+        <h1>Мои задачи</h1>
+      </div>
+      <div class="date" id="today"></div>
+    </header>
+
+    <section class="panel">
+      <form class="task-form" id="task-form">
+        <label class="sr-only" for="task-input">Новая задача</label>
+        <input
+          id="task-input"
+          type="text"
+          placeholder="Например, прочитать главу книги"
+          maxlength="120"
+          autocomplete="off"
+          required
+        >
+        <button type="submit">Добавить задачу</button>
+      </form>
+
+      <div class="list-heading">
+        <h2>Список задач</h2>
+        <span id="task-count">0 задач</span>
+      </div>
+
+      <ul class="task-list" id="task-list"></ul>
+      <p class="empty-state" id="empty-state">Пока задач нет — добавьте первую.</p>
+    </section>
+
+    <section class="panel chart-panel">
+      <div class="list-heading">
+        <div>
+          <p class="eyebrow">ПОСЛЕДНИЕ 7 ДНЕЙ</p>
+          <h2>Выполненные задачи</h2>
+        </div>
+        <span class="chart-total" id="chart-total">0</span>
+      </div>
+
+      <div
+        class="chart"
+        id="chart"
+        role="img"
+        aria-label="Количество выполненных задач за последние 7 дней"
+      ></div>
+    </section>
+
+    <footer>Данные сохраняются в этом браузере</footer>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
