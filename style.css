@@ -80,7 +80,7 @@ h2 {
   margin-bottom: 26px;
 }
 
-.task-form > input[type="text"] {
+.task-form>input[type="text"] {
   min-width: 0;
   padding: 13px 15px;
   background: #fafbf9;
@@ -90,13 +90,13 @@ h2 {
   outline: none;
 }
 
-.task-form > input[type="text"]:focus {
+.task-form>input[type="text"]:focus {
   border-color: var(--green);
   box-shadow: 0 0 0 3px rgb(79 128 95 / 12%);
 }
 
-.task-form > button {
-  padding: 0 17px;
+.task-form>button {
+  padding: 17px;
   color: #fff;
   background: var(--green);
   border: 0;
@@ -107,7 +107,30 @@ h2 {
   cursor: pointer;
 }
 
-.task-form > button:hover {
+.task-form>button:hover {
+  background: var(--green-dark);
+}
+
+.suggestion>button {
+  padding: 13px 17px;
+  color: #fff;
+  background: var(--green);
+  border: 0;
+  border-radius: 10px;
+  font: inherit;
+  font-size: 14px;
+  font-weight: 650;
+  cursor: pointer;
+}
+
+.suggestion-text {
+  background-color: #9acaaa;
+  border-radius: 3px;
+  color: black;
+  padding: 13px 17px;
+}
+
+.suggestion>button:hover {
   background: var(--green-dark);
 }
 
@@ -171,16 +194,24 @@ h2 {
   background: #df5960;
 }
 
-.theme-option input:checked + span {
+.theme-option input:checked+span {
   border-color: currentColor;
   box-shadow: 0 0 0 2px rgb(0 0 0 / 5%);
 }
 
-.theme-option.home input:checked + span { color: #7540b3; }
-.theme-option.work input:checked + span { color: #2769bd; }
-.theme-option.health input:checked + span { color: #c8424a; }
+.theme-option.home input:checked+span {
+  color: #7540b3;
+}
 
-.theme-option input:focus-visible + span {
+.theme-option.work input:checked+span {
+  color: #2769bd;
+}
+
+.theme-option.health input:checked+span {
+  color: #c8424a;
+}
+
+.theme-option input:focus-visible+span {
   outline: 3px solid #a7c9ad;
   outline-offset: 2px;
 }
@@ -189,7 +220,7 @@ h2 {
   margin-bottom: 15px;
 }
 
-.list-heading > span {
+.list-heading>span {
   color: var(--muted);
   font-size: 13px;
 }
@@ -352,7 +383,7 @@ footer {
     grid-template-columns: 1fr;
   }
 
-  .task-form > button {
+  .task-form>button {
     min-height: 45px;
   }
 

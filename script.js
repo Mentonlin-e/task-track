@@ -171,6 +171,25 @@ function renderChart() {
   }
 }
 
+const suggestions = [
+  "Прогуляться на свежем воздухе",
+  "Разобрать одну полку или ящик",
+  "Прочитать несколько страниц книги",
+  "Сделать короткую разминку",
+  "Позвонить близкому человеку",
+  "Навести порядок на рабочем столе"
+];
+
+const suggestButton = document.getElementById("suggest-task");
+const suggestionText = document.getElementById("suggestion-text");
+
+suggestButton.addEventListener("click", () => {
+  const task = suggestions[Math.floor(Math.random() * suggestions.length)];
+
+  suggestionText.textContent = `Попробуйте: ${task}`;
+  suggestionText.hidden = false;
+});
+
 form.addEventListener("submit", (event) => {
   event.preventDefault();
 

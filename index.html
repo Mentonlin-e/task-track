@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="ru">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Трекер задач</title>
   <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
   <main class="app">
     <header class="header">
@@ -19,15 +21,13 @@
     <section class="panel">
       <form class="task-form" id="task-form">
         <label class="sr-only" for="task-input">Новая задача</label>
-        <input
-          id="task-input"
-          type="text"
-          placeholder="Например, прочитать главу книги"
-          maxlength="120"
-          autocomplete="off"
-          required
-        >
+        <input id="task-input" type="text" placeholder="Например, прочитать главу книги" maxlength="120"
+          autocomplete="off" required>
         <button type="submit">Добавить задачу</button>
+        <div class="suggestion">
+          <button type="button" id="suggest-task">Предложить задачу</button>
+          <p id="suggestion-text" class="suggestion-text" hidden aria-live="polite"></p>
+        </div>
 
         <fieldset class="theme-picker">
           <legend>Тема задачи</legend>
@@ -63,8 +63,7 @@
         </div>
         <span class="chart-total" id="chart-total">0</span>
       </div>
-      <div class="chart" id="chart" role="img"
-           aria-label="Количество выполненных задач за последние 7 дней"></div>
+      <div class="chart" id="chart" role="img" aria-label="Количество выполненных задач за последние 7 дней"></div>
     </section>
 
     <footer>Данные сохраняются в этом браузере</footer>
@@ -72,4 +71,5 @@
 
   <script src="script.js"></script>
 </body>
+
 </html>
